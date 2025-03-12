@@ -46,19 +46,23 @@
             ]
         ];
 
-        function filterByAuthor(array $books, string $author): array {
-            $fileredBooks = [];
-            foreach ($books as $book) {
-                if ($book['author'] === $author) {
-                    $fileredBooks[] = $book;
+        function filter(array $items, callable $fn): array {
+            $fileredItems = [];
+            foreach ($items as $item) {
+                if ($fn($item)) {
+                    $fileredItems[] = $item;
                 }
             }
-            return $fileredBooks;
+            return $fileredItems;
         }
+
+        $filteredBooks = array_filter($books, function ($book) {
+            return $book['releaseYear'] > 1950;
+        });
     ?>
 
     <ul>
-        <?php foreach (filterByAuthor($books, 'H. G. Wells') as $book) : ?>
+        <?php foreach ($filteredBooks as $book) : ?>
             <li>
                 <a href="<?= $book['purchaseUrl'] ?>">
                     <?= $book['name'] ?> (<?= $book['releaseYear'] ?>)
