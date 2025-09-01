@@ -10,7 +10,7 @@ $routes = [
     '/contact' => 'controllers/contact.php',
 ];
 
-function abort($code = 404)
+function abort($code = Response::HTTP_NOT_FOUND)
 {
     http_response_code($code);
 
