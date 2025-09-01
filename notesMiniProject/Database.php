@@ -3,7 +3,8 @@
 // Connect to a database using PDO (PHP Data Objects) and execture a query
 class Database
 {
-    public $connection;
+    private PDO $connection;
+    private PDOStatement|false $statement;
 
     public function __construct(array $config, string $username = 'root', string $password = '')
     {
@@ -14,11 +15,32 @@ class Database
         ]);
     }
 
-    public function query($query, $params = [])
+    public function query($query, $params = []): Database
     {
-        $statement = $this->connection->prepare($query);
-        $statement->execute($params);
+        $this->statement = $this->connection->prepare($query);
+        $this->statement->execute($params);
 
-        return $statement;
+        return $this;
+    }
+
+    public function find(): mixed
+    {
+        return $this->statement->fetch();
+    }
+
+    public function get(): array
+    {
+        return $this->statement->fetchAll();
+    }
+
+    public function findOrFail(): mixed
+    {
+        $result = $this->find();
+
+        if (! $result) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+
+        return $result;
     }
 }
