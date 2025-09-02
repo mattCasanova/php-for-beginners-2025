@@ -1,5 +1,7 @@
 <?php
 
+use Core\Response;
+
 function dd($value)
 {
     echo '<pre>';
@@ -7,6 +9,8 @@ function dd($value)
     echo '</pre>';
     die();
 }
+
+
 
 function urlIs($url)
 {
