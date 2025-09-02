@@ -6,6 +6,6 @@ return [
     '/contact' => 'controllers/contact.php',
 
     '/notes' => 'controllers/notes/index.php',
-    '/note' => 'controllers/notes/note.php',
+    '/note' => 'controllers/notes/show.php',
     '/notes/create' => 'controllers/notes/create.php',
 ];
