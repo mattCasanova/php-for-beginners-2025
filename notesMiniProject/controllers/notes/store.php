@@ -1,10 +1,8 @@
 <?php
 
-use Core\Database;
+use Core\App;
 use Core\Validator;
-
-$config = require base_path('config.php');
-$db = new Database($config['database']);
+use Core\Database;
 
 $errors = [];
 $body = $_POST['body'] ?? '';
@@ -18,7 +16,9 @@ if (! Validator::string($body, 1000)) {
 }
 
 // No errors, store in the database
-$db->query('insert into notes (body, user_id) values (:body, 1)', [
+App::resolve(
+    Database::class
+)->query('insert into notes (body, user_id) values (:body, 1)', [
     'body' => $body
 ]);
 // Redirect to the notes index page
