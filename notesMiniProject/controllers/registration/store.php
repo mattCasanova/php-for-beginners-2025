@@ -37,7 +37,7 @@ if ($user) {
 // Insert the new user into the database
 $db->query('insert into users (email, password) values (:email, :password)', [
     'email' => $email,
-    'password' => $password // In a real app, make sure to hash the password!
+    'password' => password_hash($password, PASSWORD_BCRYPT)
 ]);
 
 // mark the user as logged in
