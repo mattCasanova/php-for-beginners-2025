@@ -61,7 +61,7 @@ class Router
         $route = $this->routes[$method][$uri];
 
         Middleware::resolve($route['middleware'])->handle();
-        require base_path($route['controller']);
+        require base_path('Http/controllers/' . $route['controller']);
     }
 
     public function abort($code = Response::HTTP_NOT_FOUND)
