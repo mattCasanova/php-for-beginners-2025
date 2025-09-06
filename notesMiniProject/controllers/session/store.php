@@ -12,35 +12,30 @@ $errors = [];
 if (! Validator::email($email)) {
     $errors['email'] = 'Email must be a valid email address';
 }
-if (! Validator::string($password, 255, 7)) {
-    $errors['password'] = 'Password must be between 7 and 255 characters';
+if (! Validator::string($password)) {
+    $errors['password'] = 'Please provide a valid password';
 }
 
 if (count($errors)) {
-    return view('registration/create.view.php', [
-        'heading' => 'Register',
+    return view('session/create.view.php', [
+        'heading' => 'Log In',
         'errors' => $errors
     ]);
 }
 
 $db = App::resolve(Database::class);
-// Check if the user already exists
+// Check if the user exists
 $user = $db->query('select * from users where email = :email', [
     'email' => $email
 ])->find();
 
-if ($user) {
-    header('location: /');
-    exit();
+if (! $user || ! password_verify($password, $user['password'])) {
+    $errors['email'] = 'No user with that email address or the password is incorrect';
+    return view('session/create.view.php', [
+        'heading' => 'Log In',
+        'errors' => $errors
+    ]);
 }
-
-// Insert the new user into the database
-$user = $db->query('insert into users (email, password) values (:email, :password)', [
-    'email' => $email,
-    'password' => password_hash($password, PASSWORD_BCRYPT)
-]);
-
-dd($user);
 
 login([
     'email' => $email

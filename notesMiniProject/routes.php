@@ -8,14 +8,18 @@ $router->get('/contact', 'controllers/contact.php');
 
 // Notes
 $router->get('/notes', 'controllers/notes/index.php')->only(Type::AUTH);
-$router->get('/note', 'controllers/notes/show.php');
-$router->get('/notes/create', 'controllers/notes/create.php');
+$router->get('/note', 'controllers/notes/show.php')->only(Type::AUTH);
+$router->get('/notes/create', 'controllers/notes/create.php')->only(Type::AUTH);
 
-$router->get('/notes/edit', 'controllers/notes/edit.php');
-$router->patch('/note', 'controllers/notes/update.php');
+$router->get('/notes/edit', 'controllers/notes/edit.php')->only(Type::AUTH);
+$router->patch('/note', 'controllers/notes/update.php')->only(Type::AUTH);
 
-$router->delete('/note', 'controllers/notes/destroy.php');
-$router->post('/notes', 'controllers/notes/store.php');
+$router->delete('/note', 'controllers/notes/destroy.php')->only(Type::AUTH);
+$router->post('/notes', 'controllers/notes/store.php')->only(Type::AUTH);
 
 $router->get('/register', 'controllers/registration/create.php')->only(Type::GUEST);
-$router->post('/register', 'controllers/registration/store.php');
+$router->post('/register', 'controllers/registration/store.php')->only(Type::GUEST);
+
+$router->get('/login', 'controllers/session/create.php')->only(Type::GUEST);
+$router->post('/session', 'controllers/session/store.php')->only(Type::GUEST);
+$router->delete('/session', 'controllers/session/destroy.php')->only(Type::AUTH);

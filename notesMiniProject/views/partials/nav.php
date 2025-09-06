@@ -14,9 +14,12 @@
               aria-current="page">Home</a>
             <a href="/about"
               class="<?= urlIs('/about') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' ?> rounded-md px-3 py-2 text-sm font-medium">About</a>
+              <?php if ($_SESSION['user'] ?? false): ?>
             <a href="/notes"
               class="<?= urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' ?> rounded-md px-3 py-2 text-sm font-medium">Notes</a>
-            <a href="contact"
+              <?php endif; ?>
+
+              <a href="contact"
               class="<?= urlIs('/contact') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' ?> rounded-md px-3 py-2 text-sm font-medium">Contact</a>
           </div>
         </div>
@@ -48,7 +51,12 @@
                 alt="" class="size-8 rounded-full outline -outline-offset-1 outline-white/10" />
             </button>
             <?php else: ?>
-            <a href="/register" class="text-sm font-medium text-white hover:underline">Register</a>
+              <div>
+                <a href="/register"
+                   class="<?= urlIs('/register') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' ?> rounded-md px-3 py-2 text-sm font-medium">Register</a>
+                <a href="/login"
+                   class="<?= urlIs('/login') ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' ?> rounded-md px-3 py-2 text-sm font-medium">Login</a>
+              </div>
             <?php endif; ?>
 
             <el-menu anchor="bottom end" popover
@@ -61,6 +69,15 @@
                 out</a>
             </el-menu>
           </el-dropdown>
+
+          <?php if ($_SESSION['user'] ?? false) : ?>
+          <div class="ml-3">
+            <form method="POST" action="/session">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit"
+                class="text-gray-300 hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+            </form>
+          <?php endif; ?>
         </div>
       </div>
       <div class="-mr-2 flex md:hidden">

@@ -4,7 +4,7 @@ namespace Core;
 
 class Validator
 {
-    public static function string(?string $value, int $max = INF, int $min = 1): bool
+    public static function string(?string $value, $max = INF, $min = 1): bool
     {
         $length = strlen(trim($value));
         return $length >= $min && $length <= $max;
