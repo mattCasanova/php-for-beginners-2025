@@ -1,39 +1,21 @@
 <?php
 
-use Core\App;
-use Core\Database;
+use Core\Authenticator;
 use Http\Forms\LoginForm;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-// validate the form inputs
 $form = new LoginForm();
+$auth = new Authenticator();
 
-if (! $form->validate($email, $password)) {
-    return view('session/create.view.php', [
-        'heading' => 'Log In',
-        'errors' => $form->getErrors()
-    ]);
+if ($form->validate($email, $password) && $auth->attempt($email, $password)) {
+    redirect('/');
 }
 
-$db = App::resolve(Database::class);
-// Check if the user exists
-$user = $db->query('select * from users where email = :email', [
-    'email' => $email
-])->find();
+$formErrors = $form->getErrors();
+view('session/create.view.php', [
+    'heading' => 'Log In',
+    'errors' => count($formErrors) ? $formErrors : $auth->getErrors()
 
-if (! $user || ! password_verify($password, $user['password'])) {
-    $errors['email'] = 'No user with that email address or the password is incorrect';
-    return view('session/create.view.php', [
-        'heading' => 'Log In',
-        'errors' => $errors
-    ]);
-}
-
-login([
-    'email' => $email
 ]);
-
-header('Location: /');
-exit();
