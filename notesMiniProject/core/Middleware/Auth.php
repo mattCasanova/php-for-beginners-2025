@@ -2,12 +2,14 @@
 
 namespace Core\Middleware;
 
+use Core\Session;
+
 class Auth implements Handler
 {
     public function handle()
     {
-        if (! $_SESSION['user'] ?? false) {
-            header('Location: /');
+        if (! Session::has('user')) {
+            redirect('/');
             exit();
         }
     }

@@ -30,8 +30,7 @@ $user = $db->query('select * from users where email = :email', [
 ])->find();
 
 if ($user) {
-    header('location: /');
-    exit();
+    redirect('/');
 }
 
 // Insert the new user into the database
@@ -46,5 +45,4 @@ login([
     'email' => $email
 ]);
 
-header('Location: /');
-exit();
+redirect('/');

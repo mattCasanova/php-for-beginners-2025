@@ -26,9 +26,9 @@ class Authenticator
     private function login($user)
     {
         // mark the user as logged in
-        $_SESSION['user'] = [
+        Session::put('user', [
             'email' => $user['email'],
-        ];
+        ]);
 
         // Regenerate the session ID to prevent session fixation attacks
         session_regenerate_id(true);
@@ -36,11 +36,7 @@ class Authenticator
 
     public function logout()
     {
-        $_SESSION = [];
-        session_destroy();
-
-        $params = session_get_cookie_params();
-        setcookie('PHPSESSID', '', time() - 3600, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+        Session::destroy();
     }
 
     public function getErrors(): array

@@ -1,6 +1,7 @@
 <?php
 
 use Core\Authenticator;
+use Core\Session;
 use Http\Forms\LoginForm;
 
 $email = $_POST['email'];
@@ -12,10 +13,7 @@ $auth = new Authenticator();
 if ($form->validate($email, $password) && $auth->attempt($email, $password)) {
     redirect('/');
 }
-
 $formErrors = $form->getErrors();
-view('session/create.view.php', [
-    'heading' => 'Log In',
-    'errors' => count($formErrors) ? $formErrors : $auth->getErrors()
+Session::flash('errors', count($formErrors) ? $formErrors : $auth->getErrors());
 
-]);
+redirect('/login');

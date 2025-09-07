@@ -2,12 +2,14 @@
 
 namespace Core\Middleware;
 
+use Core\Session;
+
 class Guest implements Handler
 {
     public function handle()
     {
-        if (isset($_SESSION['user'])) {
-            header('Location: /');
+        if (Session::has('user')) {
+            redirect('/');
             exit();
         }
     }
