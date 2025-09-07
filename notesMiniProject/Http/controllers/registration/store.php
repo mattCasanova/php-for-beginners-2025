@@ -39,8 +39,6 @@ $user = $db->query('insert into users (email, password) values (:email, :passwor
     'password' => password_hash($password, PASSWORD_BCRYPT)
 ]);
 
-dd($user);
-
 login([
     'email' => $email
 ]);

@@ -14,6 +14,10 @@ if ($form->validate($email, $password) && $auth->attempt($email, $password)) {
     redirect('/');
 }
 $formErrors = $form->getErrors();
+
 Session::flash('errors', count($formErrors) ? $formErrors : $auth->getErrors());
+Session::flash('old', [
+    'email' => $email
+]);
 
 redirect('/login');

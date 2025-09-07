@@ -1,6 +1,7 @@
 <?php
 
 use Core\Response;
+use Core\Session;
 
 function dd($value)
 {
@@ -37,4 +38,9 @@ function redirect(string $path)
 {
     header("Location: {$path}");
     exit();
+}
+
+function old(string $key, $default = '')
+{
+    return Session::getFlash('old')[$key] ?? $default;
 }
