@@ -1,0 +1,16 @@
+{
+    "name": "mattcasanova/php-for-beginners-2025",
+    "authors": [
+        {
+            "name": "Matt Casanova",
+            "email": "lazersquad@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Core\\": "notesMiniProject/Core/",
+            "Http\\": "notesMiniProject/Http/"
+        }
+    }
+}
