@@ -2,7 +2,6 @@
 
 namespace Http\Forms;
 
-use Core\Middleware\Auth;
 use Core\ValidationException;
 use Core\Validator;
 
