@@ -4,7 +4,7 @@ namespace Http\Forms;
 
 use Core\Validator;
 
-class LoginForm
+class AuthForm
 {
     protected array $errors = [];
 

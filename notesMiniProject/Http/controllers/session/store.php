@@ -2,17 +2,18 @@
 
 use Core\Authenticator;
 use Core\Session;
-use Http\Forms\LoginForm;
+use Http\Forms\AuthForm;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$form = new LoginForm();
+$form = new AuthForm();
 $auth = new Authenticator();
 
-if ($form->validate($email, $password) && $auth->attempt($email, $password)) {
+if ($form->validate($email, $password) && $auth->attemptLogin($email, $password)) {
     redirect('/');
 }
+
 $formErrors = $form->getErrors();
 
 Session::flash('errors', count($formErrors) ? $formErrors : $auth->getErrors());
