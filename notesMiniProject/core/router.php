@@ -64,6 +64,11 @@ class Router
         require base_path('Http/controllers/' . $route['controller']);
     }
 
+    public function previousUrl()
+    {
+        return $_SERVER['HTTP_REFERER'] ?? '/';
+    }
+
     public function abort($code = Response::HTTP_NOT_FOUND)
     {
         http_response_code($code);

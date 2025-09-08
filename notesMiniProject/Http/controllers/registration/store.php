@@ -1,24 +1,16 @@
 <?php
 
 use Core\Authenticator;
-use Core\Session;
 use Http\Forms\AuthForm;
 
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$form = new AuthForm();
+$form = AuthForm::validate($email, $password);
 $auth = new Authenticator();
 
-if ($form->validate($email, $password) && $auth->attemptRegister($email, $password)) {
-    redirect('/');
+if (! $auth->attemptRegister($email, $password)) {
+    $form->addErrors($auth->getErrors())->throw();
 }
 
-$formErrors = $form->getErrors();
-
-Session::flash('errors', count($formErrors) ? $formErrors : $auth->getErrors());
-Session::flash('old', [
-    'email' => $email
-]);
-
-redirect('/register');
+redirect('/');
